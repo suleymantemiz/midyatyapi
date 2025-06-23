@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Ana Sayfa')
+@section('title', 'İlan Ekle')
 
 @section('content')
     <h1>Hoşgeldiniz</h1>
