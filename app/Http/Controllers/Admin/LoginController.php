@@ -21,8 +21,8 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-        if (Auth::attempt($credentials)) {
+        $remember = $request->has('remember'); // checkbox işaretli mi?
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');  // giriş sonrası yönlendirilecek sayfa
         }

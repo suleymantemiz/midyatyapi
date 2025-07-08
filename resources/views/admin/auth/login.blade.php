@@ -36,14 +36,12 @@
                   </div>
                   <div class="d-flex align-items-center justify-content-between mb-4">
                     <div class="form-check">
-                      <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
-                      <label class="form-check-label text-dark" for="flexCheckChecked">
-                        Bu Cihazı Hatırla
-                      </label>
+                      <input type="checkbox" class="form-check-input" name="remember" id="remember">
+                      <label class="form-check-label" for="remember">Bu Cihazı Hatırla</label>
                     </div>
                     <a class="text-primary fw-bold" href="./index.html">Şifreni Unuttun ?</a>
                   </div>
-                   <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+                  <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
                 </form>
               </div>
             </div>

@@ -24,20 +24,41 @@ class EstateController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'type' => 'required',
-            'status' => 'required',
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'main_image' => 'required|image',
-            'gallery_images.*' => 'image',
-            'parcel_number' => 'nullable|string',
+            'name' => 'required|string|max:255',
             'features' => 'nullable|string',
+            'price' => 'required|numeric',
+            'type' => 'required|string|max:50',
+            'status' => 'required|string',
+            'parcel_number' => 'nullable|string|max:100',
+            'main_image' => 'nullable|image',
+            'gross_m2' => 'nullable|integer|min:0',
+            'net_m2' => 'nullable|integer|min:0',
+            'open_area_m2' => 'nullable|integer|min:0',
+            'number_of_rooms' => 'nullable|string|max:50',
+            'building_age' => 'nullable|integer|min:0',
+            'number_of_floors' => 'nullable|integer|min:0',
+            'heating' => 'nullable|string|max:100',
+            'number_of_bathrooms' => 'nullable|integer|min:0',
+            'kitchen' => 'nullable|string|max:100',
+            'parking' => 'nullable|string|max:100',
+            'furnished' => 'nullable|string|max:10',
+            'usage_status' => 'nullable|string|max:100',
+            'site_content' => 'nullable|string|max:255',
+            'site_name' => 'nullable|string|max:255',
+            'help_tl' => 'nullable|numeric|min:0',
+            'available_for_credit' => 'nullable|string|max:10',
+            'title_deed_status' => 'nullable|string|max:100',
+            'from_person' => 'nullable|string|max:100',
+            'exchange' => 'nullable|string|max:10',
         ]);
 
-        // Ana resmi kaydet
-        $mainImagePath = $request->file('main_image')->store('estates', 'public');
+        // Ana resmi yükle
+        $mainImagePath = null;
+        if ($request->hasFile('main_image')) {
+            $mainImagePath = $request->file('main_image')->store('estates/main', 'public');
+        }
 
-        // İlanı kaydet
+        // Estate kaydı oluştur
         $estate = Estate::create([
             'type' => $validated['type'],
             'status' => $validated['status'],
@@ -46,21 +67,41 @@ class EstateController extends Controller
             'main_image' => $mainImagePath,
             'parcel_number' => $validated['parcel_number'] ?? null,
             'features' => $validated['features'] ?? null,
+            'gross_m2' => $validated['gross_m2'] ?? null,
+            'net_m2' => $validated['net_m2'] ?? null,
+            'open_area_m2' => $validated['open_area_m2'] ?? null,
+            'number_of_rooms' => $validated['number_of_rooms'] ?? null,
+            'building_age' => $validated['building_age'] ?? null,
+            'number_of_floors' => $validated['number_of_floors'] ?? null,
+            'heating' => $validated['heating'] ?? null,
+            'number_of_bathrooms' => $validated['number_of_bathrooms'] ?? null,
+            'kitchen' => $validated['kitchen'] ?? null,
+            'parking' => $validated['parking'] ?? null,
+            'furnished' => $validated['furnished'] ?? null,
+            'usage_status' => $validated['usage_status'] ?? null,
+            'site_content' => $validated['site_content'] ?? null,
+            'site_name' => $validated['site_name'] ?? null,
+            'help_tl' => $validated['help_tl'] ?? null,
+            'available_for_credit' => $validated['available_for_credit'] ?? null,
+            'title_deed_status' => $validated['title_deed_status'] ?? null,
+            'from_person' => $validated['from_person'] ?? null,
+            'exchange' => $validated['exchange'] ?? null,
         ]);
 
         // Galeri resimlerini kaydet
         if ($request->hasFile('gallery_images')) {
-            foreach ($request->file('gallery_images') as $galleryImage) {
-                $galleryImagePath = $galleryImage->store('estates/gallery', 'public');
-                EstateImage::create([
-                    'estate_id' => $estate->id,
-                    'image' => $galleryImagePath,
+            foreach ($request->file('gallery_images') as $image) {
+                $galleryPath = $image->store('estates/gallery', 'public');
+
+                $estate->gallery()->create([
+                    'image_path' => $galleryPath,
                 ]);
             }
         }
 
-        return redirect()->route('estate.index')->with('success', 'İlan başarıyla eklendi.');
+        return redirect()->route('estate.index')->with('success', 'İlan başarıyla kaydedildi.');
     }
+
 
     public function edit($id)
     {
@@ -71,22 +112,43 @@ class EstateController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+           'name' => 'required|string|max:255',
             'features' => 'nullable|string',
             'price' => 'required|numeric',
             'type' => 'required|string|max:50',
             'status' => 'required|string',
-            'parcel_number' => 'nullable|string',
+            'parcel_number' => 'nullable|string|max:100',
             'main_image' => 'nullable|image',
+            'gross_m2' => 'nullable|integer|min:0',
+            'net_m2' => 'nullable|integer|min:0',
+            'open_area_m2' => 'nullable|integer|min:0',
+            'number_of_rooms' => 'nullable|string|max:50',
+            'building_age' => 'nullable|integer|min:0',
+            'number_of_floors' => 'nullable|integer|min:0',
+            'heating' => 'nullable|string|max:100',
+            'number_of_bathrooms' => 'nullable|integer|min:0',
+            'kitchen' => 'nullable|string|max:100',
+            'parking' => 'nullable|string|max:100',
+            'furnished' => 'nullable|string|max:10',
+            'usage_status' => 'nullable|string|max:100',
+            'site_content' => 'nullable|string|max:255',
+            'site_name' => 'nullable|string|max:255',
+            'help_tl' => 'nullable|numeric|min:0',
+            'available_for_credit' => 'nullable|string|max:10',
+            'title_deed_status' => 'nullable|string|max:100',
+            'from_person' => 'nullable|string|max:100',
+            'exchange' => 'nullable|string|max:10',
         ]);
+ $estate = Estate::findOrFail($id);
 
-        $estate = Estate::findOrFail($id);
+/*
+       
         if ($request->hasFile('main_image')) {
             // Eski görseli silmek istersen buraya ekle
             $mainImagePath = $request->file('main_image')->store('estates', 'public');
             $estate->main_image = $mainImagePath;
         }
-
+*/
         $estate->update($validated);
 
         return redirect()->route('estate.index')->with('success', 'İlan başarıyla güncellendi.');

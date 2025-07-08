@@ -24,7 +24,7 @@ body {
     margin: 0 auto;
     padding: $grid-gutter-width;
     transition: 0.2s ease-in;
-    padding-top: 180px;
+    padding-top: 120px;
 
     @include media-breakpoint-down(lg){
       padding-top: 230px;
@@ -50,7 +50,6 @@ body {
   &[data-sidebar-position="fixed"] {
     .left-sidebar {
       position: fixed;
-      top: 65px;
 
       @include media-breakpoint-down(lg){
         top: 131px;
