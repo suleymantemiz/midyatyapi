@@ -118,8 +118,18 @@ class WebController extends Controller
         \Log::info('SQL Query: ' . $query->toSql());
         \Log::info('SQL Bindings: ' . json_encode($query->getBindings()));
 
+        // Ana sayfa içerikleri
+        $homeContent = \App\Models\HomeContent::first();
+        
+        // Featured estates (özel teklifler)
+        $featuredEstates = Estate::where('is_featured', true)->latest()->take(6)->get();
+        
+        // Pass featured estates to the view so section can use them
+        view()->share('featuredEstates', $featuredEstates);
+        view()->share('homeContent', $homeContent);
+        
         // Arama sonuçlarını ana sayfada göster
-        return view('web.welcome', compact('estates', 'request'));
+        return view('web.welcome', compact('estates', 'request', 'homeContent', 'featuredEstates'));
     }
 
     public function show($id)
