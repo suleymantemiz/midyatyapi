@@ -18,7 +18,7 @@
                     @else
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
+                        <tr>
                                 <th>ID</th>
                                 <th>İsim</th>
                                 <th>Email</th>

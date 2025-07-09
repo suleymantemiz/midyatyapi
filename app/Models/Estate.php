@@ -17,6 +17,9 @@ class Estate extends Model
         'price',
         'main_image',
         'parcel_number',
+        'address',
+        'latitude',
+        'longitude',
         'features',
         'gross_m2',
         'net_m2',
@@ -36,11 +39,22 @@ class Estate extends Model
         'available_for_credit',
         'title_deed_status',
         'from_person',
-        'exchange'
+        'exchange',
+        'is_featured'
     ];
 
     public function gallery()
     {
         return $this->hasMany(EstateImage::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function approvedReviews()
+    {
+        return $this->reviews()->approved();
     }
 }

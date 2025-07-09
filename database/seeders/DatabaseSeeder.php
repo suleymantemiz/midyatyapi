@@ -16,8 +16,20 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Süleyman Superman',
+            'email' => 'supermansuleyman@gmail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+
+        // Estate seeder'ını çalıştır
+        $this->call([
+            EstateSeeder::class,
+            EstateImageSeeder::class,
+            ReviewSeeder::class,
+            AboutContentSeeder::class,
+            ServiceContentSeeder::class,
+            ContactContentSeeder::class,
+            HomeContentSeeder::class,
         ]);
     }
 }

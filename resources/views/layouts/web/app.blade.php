@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-     @include('layouts.web.head')
-  
-<body>        
+<html lang="tr">
+@include('layouts.web.head')
+<body>
 @include('layouts.web.nav')
-@include('layouts.web.hero')
-@include('layouts.web.fto')
-@include('layouts.web.gotohere')
-@include('layouts.web.fullwidth')
-@include('layouts.web.image')
-@include('layouts.web.section')
-@include('layouts.web.testimonial')
-@include('layouts.web.agent')
-@include('layouts.web.pt')
+@yield('hero')
+@yield('fto')
+@yield('goto-here')
+@yield('full-width')
+@yield('image')
+@yield('section')
+@yield('testimonials')
+@yield('agent')
+@yield('pt')
+
+
+@yield('content')
+
+
+
 @include('layouts.web.footer')
 @include('layouts.web.loader')
 @include('layouts.web.script')
-    
-    </body>
+
+@yield('scripts')
+</body>
 </html>

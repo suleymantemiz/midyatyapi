@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88970a0117c062eed55fa8728fc43833",
+    "content-hash": "7b2b5a647b1c061a9f0ab5cb4db2c7b5",
     "packages": [
         {
             "name": "brick/math",
@@ -1053,6 +1053,47 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
+        },
+        {
+            "name": "hamzaemre/class.tkgm.php",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hamzaemre/class.tkgm.php.git",
+                "reference": "6d8dbdfb02043589bc71e6bfa7b8678a85cd0db7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamzaemre/class.tkgm.php/zipball/6d8dbdfb02043589bc71e6bfa7b8678a85cd0db7",
+                "reference": "6d8dbdfb02043589bc71e6bfa7b8678a85cd0db7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "class.tkgm.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hamza Emre",
+                    "email": "hamzaemre0@gmail.com"
+                }
+            ],
+            "description": "cURL ile parsel sorgulama yapabilen basit bir PHP Sınıfıdır.",
+            "support": {
+                "issues": "https://github.com/hamzaemre/class.tkgm.php/issues",
+                "source": "https://github.com/hamzaemre/class.tkgm.php/tree/master"
+            },
+            "time": "2017-09-15T22:06:09+00:00"
         },
         {
             "name": "laravel/framework",

@@ -30,6 +30,9 @@ class EstateController extends Controller
             'type' => 'required|string|max:50',
             'status' => 'required|string',
             'parcel_number' => 'nullable|string|max:100',
+            'address' => 'nullable|string|max:500',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'main_image' => 'nullable|image',
             'gross_m2' => 'nullable|integer|min:0',
             'net_m2' => 'nullable|integer|min:0',
@@ -50,6 +53,7 @@ class EstateController extends Controller
             'title_deed_status' => 'nullable|string|max:100',
             'from_person' => 'nullable|string|max:100',
             'exchange' => 'nullable|string|max:10',
+            'is_featured' => 'nullable|boolean',
         ]);
 
         // Ana resmi yükle
@@ -66,6 +70,9 @@ class EstateController extends Controller
             'price' => $validated['price'],
             'main_image' => $mainImagePath,
             'parcel_number' => $validated['parcel_number'] ?? null,
+            'address' => $validated['address'] ?? null,
+            'latitude' => $validated['latitude'] ?? null,
+            'longitude' => $validated['longitude'] ?? null,
             'features' => $validated['features'] ?? null,
             'gross_m2' => $validated['gross_m2'] ?? null,
             'net_m2' => $validated['net_m2'] ?? null,
@@ -86,16 +93,18 @@ class EstateController extends Controller
             'title_deed_status' => $validated['title_deed_status'] ?? null,
             'from_person' => $validated['from_person'] ?? null,
             'exchange' => $validated['exchange'] ?? null,
+            'is_featured' => $validated['is_featured'] ?? false,
         ]);
 
         // Galeri resimlerini kaydet
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $image) {
-                $galleryPath = $image->store('estates/gallery', 'public');
-
-                $estate->gallery()->create([
-                    'image_path' => $galleryPath,
-                ]);
+                if ($image && $image->isValid()) {
+                    $galleryPath = $image->store('estates/gallery', 'public');
+                    $estate->gallery()->create([
+                        'image_path' => $galleryPath,
+                    ]);
+                }
             }
         }
 
@@ -118,6 +127,9 @@ class EstateController extends Controller
             'type' => 'required|string|max:50',
             'status' => 'required|string',
             'parcel_number' => 'nullable|string|max:100',
+            'address' => 'nullable|string|max:500',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
             'main_image' => 'nullable|image',
             'gross_m2' => 'nullable|integer|min:0',
             'net_m2' => 'nullable|integer|min:0',
@@ -138,6 +150,7 @@ class EstateController extends Controller
             'title_deed_status' => 'nullable|string|max:100',
             'from_person' => 'nullable|string|max:100',
             'exchange' => 'nullable|string|max:10',
+            'is_featured' => 'nullable|boolean',
         ]);
  $estate = Estate::findOrFail($id);
 
